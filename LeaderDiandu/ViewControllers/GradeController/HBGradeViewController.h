@@ -9,5 +9,8 @@
 #import "HBBaseViewController.h"
 
 @interface HBGradeViewController : HBBaseViewController
+{
+    NSMutableArray *_dataSource;
+}
 
 @end
