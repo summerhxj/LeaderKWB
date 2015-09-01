@@ -111,6 +111,7 @@
             //登录成功
             self.loginButton.enabled = YES;
             [Navigator popToRootController];
+            [[AppDelegate delegate] initDHSlideMenu];
         }
     }];
 }

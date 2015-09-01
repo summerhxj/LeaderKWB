@@ -18,6 +18,7 @@
 @interface AppDelegate ()
 {
     HBLoginViewController *loginVC;
+    DHSlideMenuController *menuVC;
 }
 
 @end
@@ -31,12 +32,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    BOOL islogined = NO;
-    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
-    if (dict) {
-        islogined = YES;
-        [HBServiceManager defaultManager].userEntity = [[HBUserEntity alloc] initWithDictionary:dict];
-    }
     
     // 启动后的界面
     
@@ -45,7 +40,23 @@
 //    self.globalNavi = [[UINavigationController alloc] initWithRootViewController:tabVC];
 //    self.globalNavi.navigationBarHidden = YES;
     
-    [self initDHSlideMenu];
+    HBGradeViewController *rootVC = [[HBGradeViewController alloc] init];
+    menuVC = [DHSlideMenuController sharedInstance];
+    menuVC.mainViewController = rootVC;
+    menuVC.rightViewController = nil;
+    menuVC.animationType = SlideAnimationTypeMove;
+    menuVC.needPanFromViewBounds = YES;
+    
+    self.globalNavi = [[UINavigationController alloc] initWithRootViewController:menuVC];
+    self.globalNavi.navigationBarHidden = YES;
+    
+    BOOL islogined = NO;
+    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
+    if (dict) {
+        islogined = YES;
+        [HBServiceManager defaultManager].userEntity = [[HBUserEntity alloc] initWithDictionary:dict];
+        [self initDHSlideMenu];
+    }
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     loginVC = [sb instantiateViewControllerWithIdentifier:@"HBLoginViewController"];
@@ -63,27 +74,28 @@
     return YES;
 }
 
+//登录成功后调用
 - (void)initDHSlideMenu
 {
+    HBUserEntity *userEntity = [HBServiceManager defaultManager].userEntity;
+    
     HBBaseViewController *ctl1 = [[HBBaseViewController alloc] init];
     HBBaseViewController *ctl2 = [[HBBaseViewController alloc] init];
     HBBaseViewController *ctl3 = [[HBBaseViewController alloc] init];
     HBBaseViewController *ctl4 = [[HBBaseViewController alloc] init];
-    NSArray *imgArray = @[@"menu_teacher", @"menu_star", @"menu_test", @"menu_pay", @"menu_setting", @"menu_service", @"menu_setting"];
-    NSArray *titleArr = @[@"我的老师", @"订阅等级", @"测试作业", @"支付中心", @"消息中心", @"联系客服", @"设置"];
+    NSArray *imgArray = nil;
+    NSArray *titleArr = nil;
+    if (userEntity.type == 1) {
+        imgArray = @[@"menu_teacher", @"menu_star", @"menu_test", @"menu_pay", @"menu_setting", @"menu_service", @"menu_setting"];
+        titleArr = @[@"我的老师", @"订阅等级", @"测试作业", @"支付中心", @"消息中心", @"联系客服", @"设置"];
+    } else if (userEntity.type == 10) {//老师
+        imgArray = @[@"menu_teacher", @"menu_test", @"menu_pay", @"menu_setting", @"menu_service", @"menu_setting"];
+        titleArr = @[@"学生管理", @"作业管理", @"我的教研员", @"消息中心", @"联系客服", @"设置"];
+    }
     DHSlideMenuViewController *leftViewController = [[DHSlideMenuViewController alloc] initWithMenus:titleArr MenuImages:imgArray  TabBarControllers:@[ctl1,ctl2,ctl3,ctl4]];
     [leftViewController initHeadView:[UIImage imageNamed:@"menu_head"] phone:@"15810738821"];
     
-    HBGradeViewController *rootVC = [[HBGradeViewController alloc] init];
-    DHSlideMenuController *menuVC = [DHSlideMenuController sharedInstance];
-    menuVC.mainViewController = rootVC;
     menuVC.leftViewController = leftViewController;
-    menuVC.rightViewController = nil;
-    menuVC.animationType = SlideAnimationTypeMove;
-    menuVC.needPanFromViewBounds = YES;
-    
-    self.globalNavi = [[UINavigationController alloc] initWithRootViewController:menuVC];
-    self.globalNavi.navigationBarHidden = YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

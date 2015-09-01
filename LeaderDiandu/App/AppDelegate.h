@@ -15,5 +15,7 @@
 
 + (AppDelegate *)delegate;
 
+- (void)initDHSlideMenu;
+
 @end
 

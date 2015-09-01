@@ -15,18 +15,15 @@
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
     [button setBackgroundImage:[UIImage imageNamed:@"back_normal"] forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"back_press"] forState:UIControlStateHighlighted];
+//    [button setBackgroundImage:[UIImage imageNamed:@"back_press"] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
-    UIScreenEdgePanGestureRecognizer *left2rightSwipe = [[UIScreenEdgePanGestureRecognizer alloc]
-                                                         initWithTarget:self
-                                                         action:@selector(handleSwipeGesture:)];
+    UIScreenEdgePanGestureRecognizer *left2rightSwipe = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
     [left2rightSwipe setDelegate:self];
     [left2rightSwipe setEdges:UIRectEdgeLeft];
     [self.view addGestureRecognizer:left2rightSwipe];
 
-    
 //    self.navigationItem.leftBarButtonItem =
 //    [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"account_head_icon"]
 //                                     style:UIBarButtonItemStylePlain
