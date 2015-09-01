@@ -79,12 +79,16 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     headView.image = headImg;
     [view addSubview:headView];
     
-    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, 80, 20)];
+    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 100, 20)];
     phoneLbl.backgroundColor = [UIColor clearColor];
     phoneLbl.textColor = [UIColor whiteColor];
     phoneLbl.font = [UIFont systemFontOfSize:14];
     phoneLbl.text = phone;
     [view addSubview:phoneLbl];
+    
+    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(170, 20, 20, 20)];
+    arrowImg.image = [UIImage imageNamed:@"menu_right"];
+    [view addSubview:arrowImg];
     
     self.tableView.sectionHeaderHeight = 80;
     self.tableView.tableHeaderView = view;
@@ -112,14 +116,17 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 {
     NSParameterAssert(self.titles);
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSlideMenuViewControllerCellReuseId
-                                                            forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSlideMenuViewControllerCellReuseId forIndexPath:indexPath];
     if ((self.images != nil) && (self.images.count > indexPath.row)){
         cell.imageView.image = [UIImage imageNamed:[self.images objectAtIndex:indexPath.row]];
     }
+    cell.backgroundColor = self.backgroundColor;
     cell.textLabel.text = [self.titles objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.backgroundColor = [self backgroundColor];
+    
+    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(170, 20, 20, 20)];
+    arrowImg.image = [UIImage imageNamed:@"menu_right"];
+    [cell addSubview:arrowImg];
     
     return cell;
 }
@@ -140,5 +147,20 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     
     [svc hideSlideMenuViewController:YES];
 }
+
+#if 0
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+}
+#endif
 
 @end

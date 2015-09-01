@@ -12,6 +12,8 @@
 #import "HBGradeViewController.h"
 #import "DHSlideMenuController.h"
 #import "DHSlideMenuViewController.h"
+#import "HBServiceManager.h"
+#import "HBDataSaveManager.h"
 
 @interface AppDelegate ()
 {
@@ -29,7 +31,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    BOOL islogined = [[NSUserDefaults standardUserDefaults] boolForKey:@"UserIsLogined"];
+    BOOL islogined = NO;
+    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
+    if (dict) {
+        islogined = YES;
+        [HBServiceManager defaultManager].userEntity = [[HBUserEntity alloc] initWithDictionary:dict];
+    }
     
     // 启动后的界面
     

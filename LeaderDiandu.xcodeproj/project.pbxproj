@@ -102,6 +102,7 @@
 		0DBE35CC1B8CD7BE00179237 /* HBRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE35CA1B8CD7BE00179237 /* HBRegistViewController.m */; };
 		0DBE35D21B8CD87900179237 /* HBNTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE35D01B8CD87900179237 /* HBNTextField.m */; };
 		0DBE35D51B8CD91500179237 /* HBHyperlinksButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE35D41B8CD91500179237 /* HBHyperlinksButton.m */; };
+		0DD214651B95568E009E3DB9 /* HBDataSaveManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD214641B95568E009E3DB9 /* HBDataSaveManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -281,6 +282,8 @@
 		0DBE35D01B8CD87900179237 /* HBNTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBNTextField.m; sourceTree = "<group>"; };
 		0DBE35D31B8CD8D500179237 /* HBHyperlinksButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBHyperlinksButton.h; sourceTree = "<group>"; };
 		0DBE35D41B8CD91500179237 /* HBHyperlinksButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBHyperlinksButton.m; sourceTree = "<group>"; };
+		0DD214631B95568E009E3DB9 /* HBDataSaveManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBDataSaveManager.h; sourceTree = "<group>"; };
+		0DD214641B95568E009E3DB9 /* HBDataSaveManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBDataSaveManager.m; sourceTree = "<group>"; };
 		0DE611411B9332DA0001C763 /* HBModelConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBModelConst.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -587,6 +590,8 @@
 			isa = PBXGroup;
 			children = (
 				0DE611411B9332DA0001C763 /* HBModelConst.h */,
+				0DD214631B95568E009E3DB9 /* HBDataSaveManager.h */,
+				0DD214641B95568E009E3DB9 /* HBDataSaveManager.m */,
 				0DB537301B8F70E80023A3F7 /* HBHTTPBaseRequest.h */,
 				0DB537311B8F70E80023A3F7 /* HBHTTPBaseRequest.m */,
 				0DB537331B8F78AF0023A3F7 /* HBServiceManager.h */,
@@ -867,6 +872,7 @@
 				0D7487601B88C2C4007BE4CD /* TextGridItemView.m in Sources */,
 				0D086EDD1B949B110061BB1F /* DHSlideMenuViewController.m in Sources */,
 				0DAAF4121B8E05DE00078285 /* Reachability.m in Sources */,
+				0DD214651B95568E009E3DB9 /* HBDataSaveManager.m in Sources */,
 				0DBE35CC1B8CD7BE00179237 /* HBRegistViewController.m in Sources */,
 				0DBE356E1B8CB95800179237 /* NSString+SBJSON.m in Sources */,
 				0DBE356B1B8CB95800179237 /* ASIInputStream.m in Sources */,

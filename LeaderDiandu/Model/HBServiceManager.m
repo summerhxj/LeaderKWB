@@ -8,6 +8,7 @@
 
 #import "HBServiceManager.h"
 #import "HBHTTPBaseRequest.h"
+#import "HBDataSaveManager.h"
 
 @interface HBServiceManager ()
 
@@ -68,6 +69,7 @@
     [[HBHTTPBaseRequest requestWithSubUrl:@"/api/auth/login"] startWithMethod:HBHTTPRequestMethodPOST parameters:dicInfo completion:^(id responseObject, NSError *error) {
         if (receivedBlock) {
             if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                [[HBDataSaveManager defaultManager] saveUserByDict:responseObject];
                 self.userEntity = [[HBUserEntity alloc] initWithDictionary:responseObject];
             }
             receivedBlock(responseObject,error);

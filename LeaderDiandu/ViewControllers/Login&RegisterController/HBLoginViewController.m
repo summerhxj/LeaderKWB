@@ -107,8 +107,11 @@
     self.loginButton.enabled = NO;
     //登录
     [[HBServiceManager defaultManager] requestLogin:phone pwd:pwd completion:^(id responseObject, NSError *error) {
-        self.loginButton.enabled = YES;
-        [Navigator popToRootController];
+        if (responseObject) {
+            //登录成功
+            self.loginButton.enabled = YES;
+            [Navigator popToRootController];
+        }
     }];
 }
 
