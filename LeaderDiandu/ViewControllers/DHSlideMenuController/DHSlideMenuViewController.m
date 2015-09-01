@@ -61,11 +61,13 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     return UIStatusBarStyleLightContent;
 }
 
-- (BOOL)prefersStatusBarHidden{
+- (BOOL)prefersStatusBarHidden
+{
     return YES;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
