@@ -158,7 +158,7 @@
         itemView = [[TextGridItemView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     }
     itemView.backgroundColor = [UIColor redColor];
-    [itemView setText:[NSString stringWithFormat:@"%ld", [[_dataSource objectAtIndex:listIndex] integerValue]]];
+//    [itemView setText:[NSString stringWithFormat:@"%ld", [[_dataSource objectAtIndex:listIndex] integerValue]]];
     return itemView;
 }
 

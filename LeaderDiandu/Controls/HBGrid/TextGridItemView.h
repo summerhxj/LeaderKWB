@@ -6,11 +6,16 @@
 //  Copyright (c) 2012年 tt. All rights reserved.
 //
 
+#define TextGridItemView_downloadState          @"downloadState"
+#define TextGridItemView_BookName               @"bookName"
+#define TextGridItemView_BookCover              @"bookCover"
+
+
 #import "HBGridItemView.h"
 
 @interface TextGridItemView : HBGridItemView
 
-
-- (void)setText:(NSString *)text;
+//更新数据
+-(void)updateFormData:(NSDictionary*)dic;
 
 @end

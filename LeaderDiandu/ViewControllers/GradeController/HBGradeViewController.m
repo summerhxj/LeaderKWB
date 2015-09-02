@@ -14,6 +14,9 @@
 #import "HBGridView.h"
 #import "TextGridItemView.h"
 
+#import "HBDataSaveManager.h"
+#import "HBServiceManager.h"
+
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define DataSourceCount 10
@@ -39,6 +42,23 @@
     [button setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(ToggleMenuPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
+    
+    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
+    if (dict) {
+        NSString *user = [dict objectForKey:@"name"];
+        NSString *token = [dict objectForKey:@"token"];
+        //获取所有可选套餐
+        [[HBServiceManager defaultManager] requestAllBookset:user token:token completion:^(id responseObject, NSError *error) {
+            if (responseObject) {
+                //获取所有可选套餐成功
+                NSArray *arr = [responseObject objectForKey:@"booksets"];
+                for (NSDictionary *dict in arr)
+                {
+                    //to do ...
+                }
+            }
+        }];
+    }
 }
 
 - (void)initMainView
@@ -123,9 +143,12 @@
         itemView = [[TextGridItemView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth/3, ScreenHeight/3)];
     }
     itemView.backgroundColor = [UIColor grayColor];
-//    [itemView setText:[NSString stringWithFormat:@"%ld", [[_dataSource objectAtIndex:listIndex] integerValue]]];
-    
-    [itemView setText:@"美妙早餐"];
+    NSDictionary * targetData = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                 @"美妙早餐", TextGridItemView_BookName,
+                                 @"mainGrid_defaultBookCover", TextGridItemView_BookCover,
+                                 @"mainGrid_download", TextGridItemView_downloadState,
+                                 nil];
+    [itemView updateFormData:targetData];
     return itemView;
 }
 
