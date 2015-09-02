@@ -8,12 +8,13 @@
 
 #import "AppDelegate.h"
 #import "Navigator.h"
-#import "HBLoginViewController.h"
-#import "HBGradeViewController.h"
-#import "DHSlideMenuController.h"
-#import "DHSlideMenuViewController.h"
 #import "HBServiceManager.h"
 #import "HBDataSaveManager.h"
+
+#import "DHSlideMenuController.h"
+#import "DHSlideMenuViewController.h"
+#import "HBLoginViewController.h"
+#import "HBGradeViewController.h"
 
 @interface AppDelegate ()
 {
@@ -79,20 +80,19 @@
 {
     HBUserEntity *userEntity = [HBServiceManager defaultManager].userEntity;
     
-    HBBaseViewController *ctl1 = [[HBBaseViewController alloc] init];
-    HBBaseViewController *ctl2 = [[HBBaseViewController alloc] init];
-    HBBaseViewController *ctl3 = [[HBBaseViewController alloc] init];
-    HBBaseViewController *ctl4 = [[HBBaseViewController alloc] init];
     NSArray *imgArray = nil;
     NSArray *titleArr = nil;
+    NSArray *ctlArray = nil;
     if (userEntity.type == 1) {
         imgArray = @[@"menu_teacher", @"menu_star", @"menu_test", @"menu_pay", @"menu_setting", @"menu_service", @"menu_setting"];
         titleArr = @[@"我的老师", @"订阅等级", @"测试作业", @"支付中心", @"消息中心", @"联系客服", @"设置"];
+        ctlArray = @[@"HBMyTeacherViewController", @"HBSubscribeViewController", @"HBTestWorkViewController", @"HBPayViewController", @"HBMessageViewController", @"", @"HBSettingViewController"];
     } else if (userEntity.type == 10) {//老师
         imgArray = @[@"menu_teacher", @"menu_test", @"menu_pay", @"menu_setting", @"menu_service", @"menu_setting"];
         titleArr = @[@"学生管理", @"作业管理", @"我的教研员", @"消息中心", @"联系客服", @"设置"];
+        ctlArray = @[@"HBStuManViewController", @"HBWorkManViewController", @"HBLeaderViewController", @"HBMessageViewController", @"", @"HBSettingViewController"];
     }
-    DHSlideMenuViewController *leftViewController = [[DHSlideMenuViewController alloc] initWithMenus:titleArr MenuImages:imgArray  TabBarControllers:@[ctl1,ctl2,ctl3,ctl4]];
+    DHSlideMenuViewController *leftViewController = [[DHSlideMenuViewController alloc] initWithMenus:titleArr MenuImages:imgArray TabBarControllers:ctlArray];
     [leftViewController initHeadView:[UIImage imageNamed:@"menu_head"] phone:@"15810738821"];
     
     menuVC.leftViewController = leftViewController;

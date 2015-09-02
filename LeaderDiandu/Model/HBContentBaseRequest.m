@@ -1,17 +1,17 @@
 //
-//  HBHTTPBaseRequest.m
+//  HBContentBaseRequest.m
 //  LeaderDiandu
 //
-//  Created by hxj on 15/8/21.
-//
+//  Created by xijun on 15/9/2.
+//  Copyright (c) 2015年 hxj. All rights reserved.
 //
 
-#import "HBHTTPBaseRequest.h"
+#import "HBContentBaseRequest.h"
 #import "AFNetworking.h"
 
-#define SERVICEAPI  @"http://teach.61dear.cn:9080"
+#define CONTENTAPI  @"http://teach.61dear.cn:9081"
 
-@interface HBHTTPBaseRequest ()
+@interface HBContentBaseRequest ()
 
 @property (nonatomic, strong)AFHTTPSessionManager *httpManager;
 
@@ -21,11 +21,11 @@
 
 @end
 
-@implementation HBHTTPBaseRequest
+@implementation HBContentBaseRequest
 
 -(AFHTTPSessionManager *)httpManager{
     
-    _httpManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:SERVICEAPI]];
+    _httpManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:CONTENTAPI]];
     
     //when the reponse type is "text/html",AF will be error,so need to set responseSerialier
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/x-javascript",@"application/json", nil];
@@ -34,7 +34,7 @@
 
 +(instancetype)requestWithSubUrl:(NSString *)url
 {
-    HBHTTPBaseRequest *instance = [[[self class] alloc] init];
+    HBContentBaseRequest *instance = [[[self class] alloc] init];
     instance.subURLString = url;
     return instance;
 }

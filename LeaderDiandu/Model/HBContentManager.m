@@ -7,7 +7,7 @@
 //
 
 #import "HBContentManager.h"
-#import "HBHTTPBaseRequest.h"
+#import "HBContentBaseRequest.h"
 
 @interface HBContentManager ()
 
@@ -27,9 +27,10 @@
     return manager;
 }
 
-- (void)Post:(NSString *)api dict:(NSDictionary *)dict block:(HBContentReceivedBlock)receivedBlock
+- (void)Post:(NSString *)api dict:(NSMutableDictionary *)dict block:(HBContentReceivedBlock)receivedBlock
 {
-    [[HBHTTPBaseRequest requestWithSubUrl:api] startWithMethod:HBHTTPRequestMethodPOST parameters:dict completion:^(id responseObject, NSError *error) {
+    [dict setObject:KAppKeyStudy forKey:@"AppKey"];
+    [[HBContentBaseRequest requestWithSubUrl:api] startWithMethod:HBHTTPRequestMethodPOST parameters:dict completion:^(id responseObject, NSError *error) {
         if (receivedBlock) {
             receivedBlock(responseObject,error);
         }

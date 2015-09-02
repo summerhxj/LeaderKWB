@@ -19,7 +19,6 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 @property(nonatomic, strong) UIColor *titleColor;
 @property(nonatomic, strong) UIColor *backgroundColor;
 @property(nonatomic, strong) UIColor *selectedColor;
-@property(nonatomic, assign) NSInteger previousRow;
 
 @end
 
@@ -135,14 +134,17 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DHSlideMenuController *svc = [DHSlideMenuController sharedInstance];
-    if (indexPath.row != self.previousRow) {
-        NSLog(@"select row:%ld",(long)indexPath.row);
-        if (indexPath.row < [self.controllers count]){
-            [svc setMainViewController:[self.controllers objectAtIndex:indexPath.row]];
-            [svc resetCurrentViewToMainViewController];
-        }
+    NSInteger index = indexPath.row;
+    NSLog(@"select row:%ld", (long)index);
+    if (index < [self.controllers count]){
+        [svc resetCurrentViewToMainViewController];
         
-        self.previousRow = indexPath.row;
+        NSString *viewCtlName = self.controllers[index];
+        Class viewCtlClass = NSClassFromString(viewCtlName);
+        if (viewCtlClass && [viewCtlClass isSubclassOfClass:[UIViewController class]]) {
+            UIViewController *viewController = [[viewCtlClass alloc] init];
+            [[AppDelegate delegate].globalNavi pushViewController:viewController animated:YES];
+        }
     }
     
     [svc hideSlideMenuViewController:YES];

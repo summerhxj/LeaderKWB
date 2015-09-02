@@ -1,15 +1,15 @@
 //
-//  HBHTTPBaseRequest.h
+//  HBContentBaseRequest.h
 //  LeaderDiandu
 //
-//  Created by hxj on 15/8/21.
-//
+//  Created by xijun on 15/9/2.
+//  Copyright (c) 2015年 hxj. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "HBModelConst.h"
 
-@interface HBHTTPBaseRequest : NSObject
+@interface HBContentBaseRequest : NSObject
 
 + (instancetype)requestWithSubUrl:(NSString *)url;
 

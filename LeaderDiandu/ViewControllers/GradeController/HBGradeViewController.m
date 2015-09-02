@@ -169,7 +169,7 @@
                 
                 HBContentEntity *contentEntity = [self.contentEntityArr objectAtIndex:0];
                 
-                [[HBContentManager defaultManager] requestBookList:contentEntity.books completion:^(id responseObject, NSError *error) {
+                [[HBContentManager defaultManager] requestBookList:contentEntity.free_books completion:^(id responseObject, NSError *error) {
                     
                     //to do ...
                 }];
