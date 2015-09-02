@@ -16,6 +16,7 @@
 #import "HBServiceManager.h"
 #import "HBContentManager.h"
 #import "HBContentEntity.h"
+#import "HBContentDetailEntity.h"
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -25,13 +26,27 @@
 {
     HBGridView *_gridView;
     NSMutableArray *_dataSource;
+    NSInteger currentID;
 }
 
 @property (nonatomic, strong)NSMutableArray *contentEntityArr;
+@property (nonatomic, strong)NSMutableDictionary *contentDetailEntityDic;
 
 @end
 
 @implementation HBGradeViewController
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.contentEntityArr = [[NSMutableArray alloc] initWithCapacity:1];
+        self.contentDetailEntityDic = [[NSMutableDictionary alloc] initWithCapacity:1];
+        currentID = 1;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,7 +112,8 @@
 // 获取单元格的总数
 - (NSInteger)gridNumberOfGridView:(HBGridView *)gridView
 {
-    return [_dataSource count];
+    NSMutableArray *arr = [self.contentDetailEntityDic objectForKey:[NSString stringWithFormat:@"%ld", currentID]];
+    return arr.count;
 }
 
 // 获取gridview每行显示的grid数
@@ -109,13 +125,15 @@
 // 获取单元格的行数
 - (NSInteger)rowNumberOfGridView:(HBGridView *)gridView
 {
-    if ([_dataSource count] % [self columnNumberOfGridView:gridView])
+    NSMutableArray *arr = [self.contentDetailEntityDic objectForKey:[NSString stringWithFormat:@"%ld", currentID]];
+    
+    if (arr.count % [self columnNumberOfGridView:gridView])
     {
-        return [_dataSource count] / [self columnNumberOfGridView:gridView] + 1;
+        return arr.count / [self columnNumberOfGridView:gridView] + 1;
     }
     else
     {
-        return [_dataSource count] / [self columnNumberOfGridView:gridView];
+        return arr.count / [self columnNumberOfGridView:gridView];
     }
 }
 
@@ -134,10 +152,13 @@
         itemView = [[TextGridItemView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth/3, ScreenHeight/3)];
     }
     itemView.backgroundColor = [UIColor grayColor];
+    
+    NSMutableArray *arr = [self.contentDetailEntityDic objectForKey:[NSString stringWithFormat:@"%ld", currentID]];
+    
+    NSMutableDictionary *dic = [arr objectAtIndex:listIndex];
+    
     NSDictionary * targetData = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                 @"美妙早餐", TextGridItemView_BookName,
-                                 @"mainGrid_defaultBookCover", TextGridItemView_BookCover,
-                                 @"mainGrid_download", TextGridItemView_downloadState,
+                                 [dic objectForKey:@"BOOK_TITLE_CN"], TextGridItemView_BookName,@"mainGrid_defaultBookCover", TextGridItemView_BookCover,@"mainGrid_download", TextGridItemView_downloadState,
                                  nil];
     [itemView updateFormData:targetData];
     return itemView;
@@ -159,7 +180,6 @@
         [[HBServiceManager defaultManager] requestAllBookset:user token:token completion:^(id responseObject, NSError *error) {
             if (responseObject) {
                 //获取所有可选套餐成功
-                self.contentEntityArr = [[NSMutableArray alloc] initWithCapacity:1];
                 NSArray *arr = [responseObject objectForKey:@"booksets"];
                 for (NSDictionary *dict in arr)
                 {
@@ -167,12 +187,20 @@
                     [self.contentEntityArr addObject:contentEntity];
                 }
                 
-                HBContentEntity *contentEntity = [self.contentEntityArr objectAtIndex:0];
-                
-                [[HBContentManager defaultManager] requestBookList:contentEntity.free_books completion:^(id responseObject, NSError *error) {
-                    
-                    //to do ...
-                }];
+                //获取书本列表
+                for (HBContentEntity *contentEntity in self.contentEntityArr) {
+                    if (contentEntity.bookId == currentID) {
+                        [[HBContentManager defaultManager] requestBookList:contentEntity.free_books completion:^(id responseObject, NSError *error) {
+                            if (responseObject){
+                                //获取书本列表成功
+                                NSArray *arr = [responseObject objectForKey:@"books"];
+                                [self.contentDetailEntityDic setObject:arr forKey:[NSString stringWithFormat:@"%ld", currentID]];
+                                [_gridView reloadData];
+                            }
+                        }];
+                    }
+                    break;
+                }
             }
         }];
     }

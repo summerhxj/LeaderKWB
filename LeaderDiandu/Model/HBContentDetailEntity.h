@@ -11,11 +11,15 @@
 
 @interface HBContentDetailEntity : HBBaseEntity
 
-@property (nonatomic, assign)NSInteger ID;
+@property (nonatomic, strong)NSString *BOOK_LEVEL;
+@property (nonatomic, strong)NSString *BOOK_SRNO;
 @property (nonatomic, strong)NSString *BOOK_TITLE;
 @property (nonatomic, strong)NSString *BOOK_TITLE_CN;
+@property (nonatomic, strong)NSString *BOOK_TYPE;
 @property (nonatomic, strong)NSString *FILE_ID;
 @property (nonatomic, strong)NSString *GRADE;
-@property (nonatomic, strong)NSString *BOOK_LEVEL;
+@property (nonatomic, assign)NSInteger ID;
+@property (nonatomic, assign)NSInteger UNIT;
+
 
 @end
