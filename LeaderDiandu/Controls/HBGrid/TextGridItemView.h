@@ -9,9 +9,7 @@
 #import "HBGridItemView.h"
 
 @interface TextGridItemView : HBGridItemView
-{
-    UILabel *_label;
-}
+
 
 - (void)setText:(NSString *)text;
 
