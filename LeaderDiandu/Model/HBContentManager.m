@@ -29,7 +29,7 @@
 
 - (void)Post:(NSString *)api dict:(NSMutableDictionary *)dict block:(HBContentReceivedBlock)receivedBlock
 {
-    [dict setObject:KAppKeyStudy forKey:@"AppKey"];
+    [dict setObject:KAppKeyStudy forKey:KWBAppKey];
     [[HBContentBaseRequest requestWithSubUrl:api] startWithMethod:HBHTTPRequestMethodPOST parameters:dict completion:^(id responseObject, NSError *error) {
         if (receivedBlock) {
             receivedBlock(responseObject,error);
