@@ -1,8 +1,6 @@
 
 LeaderDiandu.xcodeproj/project.xcworkspace/xcshareddata/LeaderDiandu.xccheckout
 
-LeaderDiandu.xcodeproj/project.xcworkspace/xcuserdata/komarejun.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate
 
-LeaderDiandu.xcodeproj/project.xcworkspace/xcuserdata/komarejun.xcuserdatad/UserInterfaceState.xcuserstate
-
-LeaderDiandu.xcodeproj/project.xcworkspace/xcuserdata/komarejun.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcbkptlist
