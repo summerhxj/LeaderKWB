@@ -109,6 +109,8 @@
 		0DD214721B960148009E3DB9 /* HBTestWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD214711B960148009E3DB9 /* HBTestWorkViewController.m */; };
 		0DD214751B96018A009E3DB9 /* HBPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD214741B96018A009E3DB9 /* HBPayViewController.m */; };
 		0DD214781B9601DA009E3DB9 /* HBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD214771B9601DA009E3DB9 /* HBMessageViewController.m */; };
+		181456DD1B96D9DD003CCD6C /* HBContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 181456DC1B96D9DD003CCD6C /* HBContentEntity.m */; };
+		181456E01B96E483003CCD6C /* HBContentDetailEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -303,6 +305,10 @@
 		0DD214761B9601DA009E3DB9 /* HBMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBMessageViewController.h; sourceTree = "<group>"; };
 		0DD214771B9601DA009E3DB9 /* HBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBMessageViewController.m; sourceTree = "<group>"; };
 		0DE611411B9332DA0001C763 /* HBModelConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBModelConst.h; sourceTree = "<group>"; };
+		181456DB1B96D9DD003CCD6C /* HBContentEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBContentEntity.h; sourceTree = "<group>"; };
+		181456DC1B96D9DD003CCD6C /* HBContentEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBContentEntity.m; sourceTree = "<group>"; };
+		181456DE1B96E483003CCD6C /* HBContentDetailEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBContentDetailEntity.h; sourceTree = "<group>"; };
+		181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBContentDetailEntity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -621,6 +627,10 @@
 				0D7A76911B92064100BC50A0 /* HBBaseEntity.m */,
 				0D7A76931B92176C00BC50A0 /* HBUserEntity.h */,
 				0D7A76941B92176C00BC50A0 /* HBUserEntity.m */,
+				181456DB1B96D9DD003CCD6C /* HBContentEntity.h */,
+				181456DC1B96D9DD003CCD6C /* HBContentEntity.m */,
+				181456DE1B96E483003CCD6C /* HBContentDetailEntity.h */,
+				181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -921,6 +931,7 @@
 				0D74886F1B8A2121007BE4CD /* RegisterInfo.m in Sources */,
 				0DD2146C1B95FF3B009E3DB9 /* HBMyTeacherViewController.m in Sources */,
 				0D7488921B8A2973007BE4CD /* NSData+MD5.m in Sources */,
+				181456E01B96E483003CCD6C /* HBContentDetailEntity.m in Sources */,
 				0DBE35351B8CB8B500179237 /* DataCheckUtil.m in Sources */,
 				0DB537271B8F5DEE0023A3F7 /* AFHTTPRequestOperationManager.m in Sources */,
 				0DBE356C1B8CB95800179237 /* ASINetworkQueue.m in Sources */,
@@ -936,6 +947,7 @@
 				0DBE353C1B8CB8B500179237 /* MLNavigationController.m in Sources */,
 				0D7488941B8A2973007BE4CD /* NSString+MD5.mm in Sources */,
 				0DB5372E1B8F5DEE0023A3F7 /* AFURLResponseSerialization.m in Sources */,
+				181456DD1B96D9DD003CCD6C /* HBContentEntity.m in Sources */,
 				0D7A76951B92176C00BC50A0 /* HBUserEntity.m in Sources */,
 				0D7A768F1B91E33900BC50A0 /* HBContentManager.m in Sources */,
 				0DB537351B8F78AF0023A3F7 /* HBServiceManager.m in Sources */,

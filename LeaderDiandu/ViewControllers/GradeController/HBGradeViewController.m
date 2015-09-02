@@ -10,12 +10,12 @@
 #import "UIViewController+AddBackBtn.h"
 #import "HBTitleView.h"
 #import "DHSlideMenuController.h"
-
 #import "HBGridView.h"
 #import "TextGridItemView.h"
-
 #import "HBDataSaveManager.h"
 #import "HBServiceManager.h"
+#import "HBContentManager.h"
+#import "HBContentEntity.h"
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -27,6 +27,8 @@
     NSMutableArray *_dataSource;
 }
 
+@property (nonatomic, strong)NSMutableArray *contentEntityArr;
+
 @end
 
 @implementation HBGradeViewController
@@ -37,28 +39,9 @@
     
     [self initMainView];
     [self initMainGrid];
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
-    [button setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(ToggleMenuPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    
-    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
-    if (dict) {
-        NSString *user = [dict objectForKey:@"name"];
-        NSString *token = [dict objectForKey:@"token"];
-        //获取所有可选套餐
-        [[HBServiceManager defaultManager] requestAllBookset:user token:token completion:^(id responseObject, NSError *error) {
-            if (responseObject) {
-                //获取所有可选套餐成功
-                NSArray *arr = [responseObject objectForKey:@"booksets"];
-                for (NSDictionary *dict in arr)
-                {
-                    //to do ...
-                }
-            }
-        }];
-    }
+    [self initButton];
+    //获取所有可选套餐
+    [self requestAllBookset];
 }
 
 - (void)initMainView
@@ -78,6 +61,14 @@
     {
         [_dataSource addObject:[NSNumber numberWithInteger:index]];
     }
+}
+
+- (void)initButton
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
+    [button setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(ToggleMenuPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
 }
 
 - (void)ToggleMenuPressed:(id)sender
@@ -157,5 +148,35 @@
     HBGridItemView *itemView = [gridView gridItemViewAtIndex:index];
     itemView.backgroundColor = [UIColor redColor];
 }
+
+- (void)requestAllBookset
+{
+    NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
+    if (dict) {
+        NSString *user = [dict objectForKey:@"name"];
+        NSString *token = [dict objectForKey:@"token"];
+        //获取所有可选套餐
+        [[HBServiceManager defaultManager] requestAllBookset:user token:token completion:^(id responseObject, NSError *error) {
+            if (responseObject) {
+                //获取所有可选套餐成功
+                self.contentEntityArr = [[NSMutableArray alloc] initWithCapacity:1];
+                NSArray *arr = [responseObject objectForKey:@"booksets"];
+                for (NSDictionary *dict in arr)
+                {
+                    HBContentEntity *contentEntity = [[HBContentEntity alloc] initWithDictionary:dict];
+                    [self.contentEntityArr addObject:contentEntity];
+                }
+                
+                HBContentEntity *contentEntity = [self.contentEntityArr objectAtIndex:0];
+                
+                [[HBContentManager defaultManager] requestBookList:contentEntity.books completion:^(id responseObject, NSError *error) {
+                    
+                    //to do ...
+                }];
+            }
+        }];
+    }
+}
+
 
 @end
