@@ -118,6 +118,7 @@
 		181456DD1B96D9DD003CCD6C /* HBContentEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 181456DC1B96D9DD003CCD6C /* HBContentEntity.m */; };
 		181456E01B96E483003CCD6C /* HBContentDetailEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */; };
 		18B5FD2E1B981454002CCD95 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5FD2D1B981454002CCD95 /* UIButton+AFNetworking.m */; };
+		18B5FD311B983930002CCD95 /* FTMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5FD301B983930002CCD95 /* FTMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -330,6 +331,8 @@
 		181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBContentDetailEntity.m; sourceTree = "<group>"; };
 		18B5FD2C1B981454002CCD95 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AFNetworking.h"; sourceTree = "<group>"; };
 		18B5FD2D1B981454002CCD95 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AFNetworking.m"; sourceTree = "<group>"; };
+		18B5FD2F1B983930002CCD95 /* FTMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMenu.h; sourceTree = "<group>"; };
+		18B5FD301B983930002CCD95 /* FTMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -479,6 +482,8 @@
 		0D7487331B88B262007BE4CD /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				18B5FD2F1B983930002CCD95 /* FTMenu.h */,
+				18B5FD301B983930002CCD95 /* FTMenu.m */,
 				0DBE35D31B8CD8D500179237 /* HBHyperlinksButton.h */,
 				0DBE35D41B8CD91500179237 /* HBHyperlinksButton.m */,
 				0DBE35CF1B8CD87900179237 /* HBNTextField.h */,
@@ -953,6 +958,7 @@
 			files = (
 				0DD214781B9601DA009E3DB9 /* HBMessageViewController.m in Sources */,
 				0DAAF4011B8D55E500078285 /* NSString+Verify.m in Sources */,
+				18B5FD311B983930002CCD95 /* FTMenu.m in Sources */,
 				0DBE35721B8CB95800179237 /* SBJsonWriter.m in Sources */,
 				0D7488541B8A2071007BE4CD /* ViewController.m in Sources */,
 				0DBE35D51B8CD91500179237 /* HBHyperlinksButton.m in Sources */,

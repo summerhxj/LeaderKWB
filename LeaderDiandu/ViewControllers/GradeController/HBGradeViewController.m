@@ -17,6 +17,7 @@
 #import "HBContentManager.h"
 #import "HBContentEntity.h"
 #import "HBContentDetailEntity.h"
+#import "FTMenu.h"
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -80,17 +81,73 @@
     }
 }
 
+-(void)showPullView
+{
+    NSMutableArray *menuItems = [[NSMutableArray alloc] initWithCapacity:1];
+    
+    for (HBContentEntity *contentEntity in self.contentEntityArr) {
+        NSString * bookIdStr = [NSString stringWithFormat:@"%ld", contentEntity.bookId];
+        KxMenuItem *item = [KxMenuItem
+                            menuItem:bookIdStr
+                            image:nil
+                            target:self
+                            action:@selector(pushMenuItem:)];
+        [menuItems addObject:item];
+    }
+ 
+    CGRect menuFrame = CGRectMake(ScreenWidth - 70, 70, 60, 50 * self.contentEntityArr.count);
+
+    [FTMenu showMenuWithFrame:menuFrame inView:self.navigationController.view menuItems:menuItems];
+}
+
+- (void) pushMenuItem:(KxMenuItem *)sender
+{
+//    if ([sender.title isEqualToString:@"1"]) {
+//        
+//    }else if([sender.title isEqualToString:@"2"]){
+//        
+//    }else if([sender.title isEqualToString:@"3"]){
+//        
+//    }else if([sender.title isEqualToString:@"4"]){
+//        
+//    }else if([sender.title isEqualToString:@"5"]){
+//        
+//    }else if([sender.title isEqualToString:@"6"]){
+//        
+//    }else if([sender.title isEqualToString:@"7"]){
+//        
+//    }else if([sender.title isEqualToString:@"8"]){
+//        
+//    }else if([sender.title isEqualToString:@"9"]){
+//        
+//    }
+
+    currentID = [sender.title integerValue];
+    //获取书本列表
+    [self requestContentDetailEntity];
+}
+
 - (void)initButton
 {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
-    [button setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(ToggleMenuPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 20, 44, 44)];
+    [leftButton setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(ToggleMenuPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:leftButton];
+    
+    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth - 8 - 44, 20, 44, 44)];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ToggleMenu"] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rightButton];
 }
 
 - (void)ToggleMenuPressed:(id)sender
 {
     [[DHSlideMenuController sharedInstance] showLeftViewController:YES];
+}
+
+- (void)rightButtonPressed:(id)sender
+{
+    [self showPullView];
 }
 
 - (void)didReceiveMemoryWarning {
