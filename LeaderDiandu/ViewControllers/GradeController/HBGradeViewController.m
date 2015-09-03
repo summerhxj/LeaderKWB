@@ -63,12 +63,14 @@
 {
     HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"课外宝" onView:self.view];
     [self.view addSubview:labTitle];
+    
 }
 
 - (void)initMainGrid
 {
     _gridView = [[HBGridView alloc] initWithFrame:CGRectMake(0, 80, ScreenWidth, ScreenHeight)];
     _gridView.delegate = self;
+    _gridView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_gridView];
     
     _dataSource = [[NSMutableArray alloc] initWithCapacity:0];
@@ -151,14 +153,13 @@
     {
         itemView = [[TextGridItemView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth/3, ScreenHeight/3)];
     }
-    itemView.backgroundColor = [UIColor grayColor];
     
     NSMutableArray *arr = [self.contentDetailEntityDic objectForKey:[NSString stringWithFormat:@"%ld", currentID]];
     
     NSMutableDictionary *dic = [arr objectAtIndex:listIndex];
     
     NSDictionary * targetData = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                 [dic objectForKey:@"BOOK_TITLE_CN"], TextGridItemView_BookName,@"mainGrid_defaultBookCover", TextGridItemView_BookCover,@"mainGrid_download", TextGridItemView_downloadState,
+                                 [dic objectForKey:@"BOOK_TITLE_CN"], TextGridItemView_BookName,[dic objectForKey:@"FILE_ID"], TextGridItemView_BookCover,@"mainGrid_download", TextGridItemView_downloadState,
                                  nil];
     [itemView updateFormData:targetData];
     return itemView;
@@ -167,7 +168,7 @@
 - (void)gridView:(HBGridView *)gridView didSelectGridItemAtIndex:(NSInteger)index
 {
     HBGridItemView *itemView = [gridView gridItemViewAtIndex:index];
-    itemView.backgroundColor = [UIColor redColor];
+    itemView.backgroundColor = [UIColor grayColor];
 }
 
 - (void)requestAllBookset
@@ -186,23 +187,29 @@
                     HBContentEntity *contentEntity = [[HBContentEntity alloc] initWithDictionary:dict];
                     [self.contentEntityArr addObject:contentEntity];
                 }
-                
                 //获取书本列表
-                for (HBContentEntity *contentEntity in self.contentEntityArr) {
-                    if (contentEntity.bookId == currentID) {
-                        [[HBContentManager defaultManager] requestBookList:contentEntity.free_books completion:^(id responseObject, NSError *error) {
-                            if (responseObject){
-                                //获取书本列表成功
-                                NSArray *arr = [responseObject objectForKey:@"books"];
-                                [self.contentDetailEntityDic setObject:arr forKey:[NSString stringWithFormat:@"%ld", currentID]];
-                                [_gridView reloadData];
-                            }
-                        }];
-                    }
-                    break;
-                }
+                [self requestContentDetailEntity];
             }
         }];
+    }
+}
+
+-(void)requestContentDetailEntity
+{
+    //获取书本列表
+    for (HBContentEntity *contentEntity in self.contentEntityArr) {
+        if (contentEntity.bookId == currentID) {
+            [[HBContentManager defaultManager] requestBookList:contentEntity.free_books completion:^(id responseObject, NSError *error) {
+                if (responseObject){
+                    //获取书本列表成功
+                    NSArray *arr = [responseObject objectForKey:@"books"];
+                    [self.contentDetailEntityDic setObject:arr forKey:[NSString stringWithFormat:@"%ld", currentID]];
+                    [_gridView reloadData];
+                }
+            }];
+            
+            break;
+        }
     }
 }
 

@@ -21,6 +21,6 @@
 @property (nonatomic, assign)NSInteger ID;
 @property (nonatomic, assign)NSInteger UNIT;
 
-- (NSString *)getBookImageUrl;
+//- (NSString *)getBookImageUrl;
 
 @end

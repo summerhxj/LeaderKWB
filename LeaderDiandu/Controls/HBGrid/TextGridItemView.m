@@ -7,6 +7,9 @@
 //
 
 #import "TextGridItemView.h"
+#import "UIButton+AFNetworking.h"
+
+#define KHBBookImgFormatUrl @" http://teach.61dear.cn:9083/bookImgStorage/%@.jpg?t=BASE64(%@)"
 
 @interface TextGridItemView()
 {
@@ -86,12 +89,14 @@
     //书籍封皮
     if ([dic objectForKey:TextGridItemView_BookCover])
     {
-    [self.bookCoverButton setBackgroundImage:[UIImage imageNamed:[dic objectForKey:TextGridItemView_BookCover]] forState:UIControlStateNormal];
+        NSString *fileIdStr = [dic objectForKey:TextGridItemView_BookCover];
+        fileIdStr = [fileIdStr lowercaseString];
+        NSString *urlStr = [NSString stringWithFormat:KHBBookImgFormatUrl, fileIdStr, fileIdStr];
+        [self.bookCoverButton setImageForState:UIControlStateNormal withURL:[NSURL URLWithString:urlStr] placeholderImage:[UIImage imageNamed:@"mainGrid_defaultBookCover"]];
     }
 
     //刷新cell
     [self setNeedsLayout];
 }
-
 
 @end
