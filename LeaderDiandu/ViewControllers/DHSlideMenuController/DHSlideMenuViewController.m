@@ -51,6 +51,17 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     self.tableView.tableFooterView = nil;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSlideMenuViewControllerCellReuseId];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+//    self.tableView.frame = CGRectMake(0, 100, 200, screenSize.height-100);
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    self.tableView.frame = CGRectMake(0, 100, 200, screenSize.height-100);
 }
 
 #pragma mark - Configuring the view’s layout behavior
@@ -71,26 +82,13 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initHeadView:(UIImage *)headImg phone:(NSString *)phone
+- (void)headViewTapGesture:(UITapGestureRecognizer *)tap
 {
-    UIView *view = [[UIView alloc] init];
-    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 40, 40)];
-    headView.image = headImg;
-    [view addSubview:headView];
-    
-    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 20, 100, 20)];
-    phoneLbl.backgroundColor = [UIColor clearColor];
-    phoneLbl.textColor = [UIColor whiteColor];
-    phoneLbl.font = [UIFont systemFontOfSize:14];
-    phoneLbl.text = phone;
-    [view addSubview:phoneLbl];
-    
-    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(170, 20, 20, 20)];
-    arrowImg.image = [UIImage imageNamed:@"menu_right"];
-    [view addSubview:arrowImg];
-    
-    self.tableView.sectionHeaderHeight = 80;
-    self.tableView.tableHeaderView = view;
+    Class viewCtlClass = NSClassFromString(_headerClassName);
+    if (viewCtlClass && [viewCtlClass isSubclassOfClass:[UIViewController class]]) {
+        UIViewController *viewController = [[viewCtlClass alloc] init];
+        [[AppDelegate delegate].globalNavi pushViewController:viewController animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -106,9 +104,46 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     return self.titles.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 80;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] init];
+    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 40, 40)];
+    headView.image = [UIImage imageNamed:@"menu_head"];
+    [view addSubview:headView];
+    
+    UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, 100, 20)];
+    nameLbl.backgroundColor = [UIColor clearColor];
+    nameLbl.textColor = [UIColor whiteColor];
+    nameLbl.font = [UIFont systemFontOfSize:14];
+    nameLbl.text = _headerName;
+    [view addSubview:nameLbl];
+    
+    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, 100, 20)];
+    phoneLbl.backgroundColor = [UIColor clearColor];
+    phoneLbl.textColor = [UIColor whiteColor];
+    phoneLbl.font = [UIFont systemFontOfSize:14];
+    phoneLbl.text = _headerPhone;
+    [view addSubview:phoneLbl];
+    
+    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(170, 20, 20, 20)];
+    arrowImg.image = [UIImage imageNamed:@"menu_right"];
+    [view addSubview:arrowImg];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewTapGesture:)];
+    //将触摸事件添加到当前view
+    [view addGestureRecognizer:tapGestureRecognizer];
+    
+    return view;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

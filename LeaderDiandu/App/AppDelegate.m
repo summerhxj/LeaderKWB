@@ -93,8 +93,9 @@
         ctlArray = @[@"HBStuManViewController", @"HBWorkManViewController", @"HBLeaderViewController", @"HBMessageViewController", @"", @"HBSettingViewController"];
     }
     DHSlideMenuViewController *leftViewController = [[DHSlideMenuViewController alloc] initWithMenus:titleArr MenuImages:imgArray TabBarControllers:ctlArray];
-    [leftViewController initHeadView:[UIImage imageNamed:@"menu_head"] phone:@"15810738821"];
-    
+    leftViewController.headerName = userEntity.display_name;
+    leftViewController.headerPhone = userEntity.name;
+    leftViewController.headerClassName = @"HBUserInfoViewController";
     menuVC.leftViewController = leftViewController;
 }
 

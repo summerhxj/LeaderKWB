@@ -1,26 +1,26 @@
 //
-//  HBMyTeacherViewController.m
+//  HBUserInfoViewController.m
 //  LeaderDiandu
 //
-//  Created by xijun on 15/9/1.
+//  Created by xijun on 15/9/2.
 //  Copyright (c) 2015年 hxj. All rights reserved.
 //
 
-#import "HBMyTeacherViewController.h"
+#import "HBUserInfoViewController.h"
 #import "UIViewController+AddBackBtn.h"
 #import "HBTitleView.h"
 
-@interface HBMyTeacherViewController ()
+@interface HBUserInfoViewController ()
 
 @end
 
-@implementation HBMyTeacherViewController
+@implementation HBUserInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"我的老师" onView:self.view];
+    HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"个人中心" onView:self.view];
     [self.view addSubview:labTitle];
     
     [self addBackButton];
