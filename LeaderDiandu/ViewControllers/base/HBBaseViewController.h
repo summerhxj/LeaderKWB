@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define KHBNaviBarHeight    64
+
 @interface HBBaseViewController : UIViewController
 {
     

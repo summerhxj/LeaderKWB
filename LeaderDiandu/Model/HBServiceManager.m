@@ -112,10 +112,10 @@
     [self Post:@"/api/auth/smscode" dict:dicInfo block:receivedBlock];
 }
 
-- (void)requestUserInfo:(NSString *)user token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock
+- (void)requestUserInfo:(NSInteger)userid token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock
 {
     NSMutableDictionary *dicInfo = [[NSMutableDictionary alloc] init];
-    [dicInfo setObject:user     forKey:@"user"];
+    [dicInfo setObject:@(userid)     forKey:@"user"];
     [dicInfo setObject:token    forKey:@"token"];
     
     if (_receivedBlock) {
@@ -243,7 +243,9 @@
 {
     NSMutableDictionary *dicInfo = [[NSMutableDictionary alloc] init];
     [dicInfo setObject:user     forKey:@"user"];
-    [dicInfo setObject:teacher    forKey:@"teacher"];
+    if (teacher) {
+        [dicInfo setObject:teacher    forKey:@"teacher"];
+    }
     
     if (_receivedBlock) {
         return;

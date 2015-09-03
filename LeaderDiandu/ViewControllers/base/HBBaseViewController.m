@@ -25,7 +25,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor clearColor];
+    UIImageView *backgroundImg = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    backgroundImg.image = [UIImage imageNamed:@"star_bg"];
+    [self.view addSubview:backgroundImg];
+    
+    CGRect rect = self.view.frame;
+    UIImageView *navView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(rect), KHBNaviBarHeight)];
+    navView.image = [UIImage imageNamed:@"resource_title_bg"];
+    navView.tag = 1001;
+    [self.view addSubview:navView];
 }
 
 -(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion{

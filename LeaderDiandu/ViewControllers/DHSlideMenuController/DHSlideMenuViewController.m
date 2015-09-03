@@ -47,13 +47,11 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    self.view.backgroundColor = [UIColor darkGrayColor];
     self.tableView.backgroundColor = [UIColor darkGrayColor];
     self.tableView.tableFooterView = nil;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSlideMenuViewControllerCellReuseId];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    
-//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-//    self.tableView.frame = CGRectMake(0, 100, 200, screenSize.height-100);
 }
 
 - (void)viewDidLayoutSubviews
@@ -84,6 +82,9 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 
 - (void)headViewTapGesture:(UITapGestureRecognizer *)tap
 {
+    DHSlideMenuController *svc = [DHSlideMenuController sharedInstance];
+    [svc hideSlideMenuViewController:YES];
+    
     Class viewCtlClass = NSClassFromString(_headerClassName);
     if (viewCtlClass && [viewCtlClass isSubclassOfClass:[UIViewController class]]) {
         UIViewController *viewController = [[viewCtlClass alloc] init];

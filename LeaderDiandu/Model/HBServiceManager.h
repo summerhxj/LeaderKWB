@@ -67,7 +67,7 @@ typedef void(^HBServiceReceivedBlock) (id responseObject, NSError *error);
  *  @param token            登录返回的凭证
  *  @param receivedBlock 回调Block
  */
-- (void)requestUserInfo:(NSString *)user token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock;
+- (void)requestUserInfo:(NSInteger)userid token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock;
 
 /**
  *  更新用户信息
