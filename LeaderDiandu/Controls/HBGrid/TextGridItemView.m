@@ -9,7 +9,7 @@
 #import "TextGridItemView.h"
 #import "UIButton+AFNetworking.h"
 
-#define KHBBookImgFormatUrl @" http://teach.61dear.cn:9083/bookImgStorage/%@.jpg?t=BASE64(%@)"
+#define KHBBookImgFormatUrl @"http://teach.61dear.cn:9083/bookImgStorage/%@.jpg?t=BASE64(%@)"
 
 @interface TextGridItemView()
 {
