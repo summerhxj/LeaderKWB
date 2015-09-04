@@ -37,8 +37,9 @@
     NSInteger levelButtonWith = self.frame.size.width/2;
     self.levelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.levelButton.frame = CGRectMake((self.frame.size.width - levelButtonWith)/2, (self.frame.size.width - levelButtonWith)/2, levelButtonWith, levelButtonWith);
-    [self.levelButton setImage:[UIImage imageNamed:@"flower"] forState:UIControlStateNormal];
-    [self.levelButton addTarget:self action:@selector(levelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.levelButton setImage:[UIImage imageNamed:@"flower"] forState:UIControlStateDisabled];
+//    [self.levelButton addTarget:self action:@selector(levelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.levelButton.enabled = NO;
     [self addSubview:self.levelButton];
     
     //已订阅图标
@@ -47,18 +48,24 @@
     [self addSubview:self.subscribedImgView];
 }
 
--(void)levelButtonPressed:(id)sender
-{
-    
-}
+//-(void)levelButtonPressed:(id)sender
+//{
+//    
+//}
 
-//更新等级按钮
--(void)updateSubscribeButton:(BOOL)isSubscribed
+//更新订阅图标和等级按钮
+-(void)updateSubscribeImgView:(BOOL)isSubscribed
+                  levelButton:(BOOL)isCurrentSelectIndex
 {
     if (isSubscribed) {
         self.subscribedImgView.hidden = NO;
+        [self.levelButton setImage:[UIImage imageNamed:@"flower"] forState:UIControlStateDisabled];
+    }else if(isCurrentSelectIndex){
+        self.subscribedImgView.hidden = YES;
+        [self.levelButton setImage:[UIImage imageNamed:@"flower"] forState:UIControlStateDisabled];
     }else{
         self.subscribedImgView.hidden = YES;
+        [self.levelButton setImage:[UIImage imageNamed:@"menu_head"] forState:UIControlStateDisabled];
     }
 }
 

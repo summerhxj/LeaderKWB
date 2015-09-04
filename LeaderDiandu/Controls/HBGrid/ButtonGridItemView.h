@@ -11,7 +11,8 @@
 
 @interface ButtonGridItemView : HBGridItemView
 
-//更新等级按钮
--(void)updateSubscribeButton:(BOOL)isSubscribed;
+//更新订阅图标和等级按钮
+-(void)updateSubscribeImgView:(BOOL)isSubscribed
+                  levelButton:(BOOL)isCurrentSelectIndex;
 
 @end

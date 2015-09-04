@@ -18,6 +18,7 @@
 @interface HBSubscribeViewController ()<HBGridViewDelegate, UIAlertViewDelegate>
 {
     HBGridView *_gridView;
+    NSInteger currentSelectIndex;
 }
 
 @property (nonatomic, strong) UIButton* confirmButton;
@@ -142,9 +143,11 @@
     
     //说明这个等级是被订阅的，需要特殊标记一下
     if (self.subscribeId == (listIndex + 1)) {
-        [itemView updateSubscribeButton:YES];
+        [itemView updateSubscribeImgView:YES levelButton:YES];
+    }else if(currentSelectIndex == listIndex){
+        [itemView updateSubscribeImgView:NO levelButton:YES];
     }else{
-        [itemView updateSubscribeButton:NO];
+        [itemView updateSubscribeImgView:NO levelButton:NO];
     }
 
     return itemView;
@@ -152,8 +155,9 @@
 
 - (void)gridView:(HBGridView *)gridView didSelectGridItemAtIndex:(NSInteger)index
 {
-    HBGridItemView *itemView = [gridView gridItemViewAtIndex:index];
-    itemView.backgroundColor = [UIColor grayColor];
+    currentSelectIndex = index;
+    [_gridView reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning {
