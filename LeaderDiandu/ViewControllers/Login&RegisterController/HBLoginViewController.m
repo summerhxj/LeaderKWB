@@ -26,8 +26,6 @@
 @property (weak, nonatomic) IBOutlet HBNTextField *inputPhoneNumber;
 @property (weak, nonatomic) IBOutlet HBNTextField *inputPassword;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UIButton *loginWithQQ;
-@property (weak, nonatomic) IBOutlet UIButton *loginWithWeibo;
 @property (weak, nonatomic) IBOutlet HBHyperlinksButton *forgetPassword;
 @property (weak, nonatomic) IBOutlet HBHyperlinksButton *userRegister;
 
@@ -63,13 +61,15 @@
     }
 //    UITextField *textPW = (UITextField *)[[self.view viewWithTag:1005] viewWithTag:1007];
     self.inputPassword.text = @"";
-    
 }
 
 #pragma mark - init Method
 
 - (void)initMainView
 {
+    HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"注册登录" onView:self.view];
+    [self.view addSubview:labTitle];
+    
 //    self.fd_interactivePopDisabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHideKeyboard:)];
     [self.view addGestureRecognizer:tap];

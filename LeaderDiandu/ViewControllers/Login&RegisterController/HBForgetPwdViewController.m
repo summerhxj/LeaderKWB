@@ -8,7 +8,7 @@
 
 #import "HBForgetPwdViewController.h"
 #import "HBNTextField.h"
-//#import "MJLoginManager.h"
+#import "HBTitleView.h"
 #import "NSString+Verify.h"
 
 @interface HBForgetPwdViewController ()
@@ -18,9 +18,6 @@
 @property (weak, nonatomic) IBOutlet HBNTextField *inputVerifyCode;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *loginWithQQButton;
-@property (weak, nonatomic) IBOutlet UIButton *loginWithWeiboButton;
 
 @property (nonatomic, assign) int countDownNum;
 @property (nonatomic, strong) NSTimer *mtimer;
@@ -48,6 +45,9 @@
 #pragma mark - init Method
 - (void)initMainView
 {
+    HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"修改密码" onView:self.view];
+    [self.view addSubview:labTitle];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHideKeyboard:)];
     [self.view addGestureRecognizer:tap];
     

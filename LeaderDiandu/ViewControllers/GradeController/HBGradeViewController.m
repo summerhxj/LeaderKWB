@@ -61,7 +61,6 @@
 {
     HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"课外宝" onView:self.view];
     [self.view addSubview:labTitle];
-    
 }
 
 - (void)initMainGrid

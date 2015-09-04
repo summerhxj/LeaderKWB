@@ -10,12 +10,12 @@
 #import "HBNTextField.h"
 #import "NSString+Verify.h"
 #import "HBServiceManager.h"
+#import "HBTitleView.h"
 
 @interface HBRegistViewController ()
 
 @property (weak, nonatomic) IBOutlet HBNTextField *inputPhoneNumber;
 @property (weak, nonatomic) IBOutlet HBNTextField *inputPassword;
-@property (weak, nonatomic) IBOutlet HBNTextField *inputNickName;
 @property (weak, nonatomic) IBOutlet HBNTextField *inputVerifyCode;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeButton;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
@@ -54,6 +54,9 @@
 #pragma mark - init Method
 - (void)initMainView
 {
+    HBTitleView *labTitle = [HBTitleView titleViewWithTitle:@"注册" onView:self.view];
+    [self.view addSubview:labTitle];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapToHideKeyboard:)];
     [self.view addGestureRecognizer:tap];
     
