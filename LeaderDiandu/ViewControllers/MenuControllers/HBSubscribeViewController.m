@@ -18,16 +18,26 @@
 @interface HBSubscribeViewController ()<HBGridViewDelegate, UIAlertViewDelegate>
 {
     HBGridView *_gridView;
-    NSInteger currentSelectIndex;
 }
 
 @property (nonatomic, strong) UIButton* confirmButton;
 @property (nonatomic, strong) UIButton* ruleDescriptionButton;
 @property (nonatomic, assign) NSInteger subscribeId;
+@property (nonatomic, assign) NSInteger currentSelectIndex;
 
 @end
 
 @implementation HBSubscribeViewController
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.subscribeId = -1;
+        self.currentSelectIndex = -1;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,9 +109,17 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0){
-        //to do ...
+        
     }else{
-        //to do ...
+        NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
+        if (dict) {
+            NSString *user = [dict objectForKey:@"name"];
+            NSString *token = [dict objectForKey:@"token"];
+            //获取用户当前订阅的套餐
+            [[HBServiceManager defaultManager] requestBooksetSub:user token:token bookset_id:[NSString stringWithFormat:@"%ld",(self.currentSelectIndex + 1)] months:@"1" completion:^(id responseObject, NSError *error) {
+                [self requestUserBookset];
+            }];
+        }
     }
 }
 
@@ -144,7 +162,7 @@
     //说明这个等级是被订阅的，需要特殊标记一下
     if (self.subscribeId == (listIndex + 1)) {
         [itemView updateSubscribeImgView:YES levelButton:YES];
-    }else if(currentSelectIndex == listIndex){
+    }else if(self.currentSelectIndex == listIndex){
         [itemView updateSubscribeImgView:NO levelButton:YES];
     }else{
         [itemView updateSubscribeImgView:NO levelButton:NO];
@@ -155,7 +173,7 @@
 
 - (void)gridView:(HBGridView *)gridView didSelectGridItemAtIndex:(NSInteger)index
 {
-    currentSelectIndex = index;
+    self.currentSelectIndex = index;
     [_gridView reloadData];
 
 }
