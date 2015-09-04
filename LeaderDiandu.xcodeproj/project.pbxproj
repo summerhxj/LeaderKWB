@@ -121,6 +121,7 @@
 		181456E01B96E483003CCD6C /* HBContentDetailEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 181456DF1B96E483003CCD6C /* HBContentDetailEntity.m */; };
 		18B5FD2E1B981454002CCD95 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5FD2D1B981454002CCD95 /* UIButton+AFNetworking.m */; };
 		18B5FD311B983930002CCD95 /* FTMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B5FD301B983930002CCD95 /* FTMenu.m */; };
+		18EC49431B999B2D000900E4 /* ButtonGridItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC49421B999B2D000900E4 /* ButtonGridItemView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -339,6 +340,8 @@
 		18B5FD2D1B981454002CCD95 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AFNetworking.m"; sourceTree = "<group>"; };
 		18B5FD2F1B983930002CCD95 /* FTMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMenu.h; sourceTree = "<group>"; };
 		18B5FD301B983930002CCD95 /* FTMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMenu.m; sourceTree = "<group>"; };
+		18EC49411B999B2D000900E4 /* ButtonGridItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonGridItemView.h; sourceTree = "<group>"; };
+		18EC49421B999B2D000900E4 /* ButtonGridItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonGridItemView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -513,6 +516,8 @@
 				0D7487571B88C2C4007BE4CD /* HBGridView.m */,
 				0D7487581B88C2C4007BE4CD /* TextGridItemView.h */,
 				0D7487591B88C2C4007BE4CD /* TextGridItemView.m */,
+				18EC49411B999B2D000900E4 /* ButtonGridItemView.h */,
+				18EC49421B999B2D000900E4 /* ButtonGridItemView.m */,
 			);
 			path = HBGrid;
 			sourceTree = "<group>";
@@ -1004,6 +1009,7 @@
 				0DBE353E1B8CB8B500179237 /* NSDateUtilities.m in Sources */,
 				0D74875E1B88C2C4007BE4CD /* HBGridView.m in Sources */,
 				0DAAF4071B8D651500078285 /* HBTitleView.m in Sources */,
+				18EC49431B999B2D000900E4 /* ButtonGridItemView.m in Sources */,
 				0DAAF4041B8D5F8900078285 /* UIViewController+AddBackBtn.m in Sources */,
 				0DD2146F1B95FFAC009E3DB9 /* HBSubscribeViewController.m in Sources */,
 				0D74875C1B88C2C4007BE4CD /* HBGridItemView.m in Sources */,

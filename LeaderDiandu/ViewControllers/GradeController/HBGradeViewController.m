@@ -19,14 +19,11 @@
 #import "HBContentDetailEntity.h"
 #import "FTMenu.h"
 
-#define ScreenWidth [UIScreen mainScreen].bounds.size.width
-#define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define DataSourceCount 10
 
 @interface HBGradeViewController ()<HBGridViewDelegate>
 {
     HBGridView *_gridView;
-    NSMutableArray *_dataSource;
     NSInteger currentID;
 }
 
@@ -73,12 +70,6 @@
     _gridView.delegate = self;
     _gridView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_gridView];
-    
-    _dataSource = [[NSMutableArray alloc] initWithCapacity:0];
-    for (NSInteger index = 0; index < DataSourceCount; ++index)
-    {
-        [_dataSource addObject:[NSNumber numberWithInteger:index]];
-    }
 }
 
 -(void)showPullView

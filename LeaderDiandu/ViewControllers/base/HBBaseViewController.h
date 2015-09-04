@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #define KHBNaviBarHeight    64
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
 
 @interface HBBaseViewController : UIViewController
 {
