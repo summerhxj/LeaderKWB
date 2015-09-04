@@ -55,7 +55,6 @@
     NSDictionary *dict = [[HBDataSaveManager defaultManager] loadUser];
     if (dict) {
         islogined = YES;
-        [HBServiceManager defaultManager].userEntity = [[HBUserEntity alloc] initWithDictionary:dict];
         [self initDHSlideMenu];
     }
 
@@ -78,7 +77,7 @@
 //登录成功后调用
 - (void)initDHSlideMenu
 {
-    HBUserEntity *userEntity = [HBServiceManager defaultManager].userEntity;
+    HBUserEntity *userEntity = [[HBDataSaveManager defaultManager] userEntity];
     
     NSArray *imgArray = nil;
     NSArray *titleArr = nil;

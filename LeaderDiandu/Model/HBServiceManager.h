@@ -7,14 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HBUserEntity.h"
 #import "HBModelConst.h"
 
 typedef void(^HBServiceReceivedBlock) (id responseObject, NSError *error);
 
 @interface HBServiceManager : NSObject
-
-@property (nonatomic, strong)HBUserEntity *userEntity;
 
 + (HBServiceManager *)defaultManager;
 
@@ -67,7 +64,7 @@ typedef void(^HBServiceReceivedBlock) (id responseObject, NSError *error);
  *  @param token            登录返回的凭证
  *  @param receivedBlock 回调Block
  */
-- (void)requestUserInfo:(NSInteger)userid token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock;
+- (void)requestUserInfo:(NSString *)user token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock;
 
 /**
  *  更新用户信息
@@ -78,7 +75,7 @@ typedef void(^HBServiceReceivedBlock) (id responseObject, NSError *error);
  *  @display_name gender 等参数至少有一个即可，多值可选
  *  @param receivedBlock 回调Block
  */
-- (void)requestUpdateUser:(NSString *)user token:(NSString *)token display_name:(NSString *)display_name gender:(NSString *)gender completion:(HBServiceReceivedBlock)receivedBlock;
+- (void)requestUpdateUser:(NSString *)user token:(NSString *)token display_name:(NSString *)display_name gender:(NSInteger)gender completion:(HBServiceReceivedBlock)receivedBlock;
 
 /**
  *  绑定手机

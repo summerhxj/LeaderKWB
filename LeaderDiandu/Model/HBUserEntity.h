@@ -15,6 +15,10 @@
 @property (nonatomic, assign)NSInteger type;/** type: 1 - 学生； 10 - 老师*/
 @property (nonatomic, strong)NSString *display_name;
 @property (nonatomic, strong)NSString *name;
+@property (nonatomic, strong)NSString *phone;
 @property (nonatomic, strong)NSString *token;
+
+@property (nonatomic, strong)NSDictionary *myClass;
+@property (nonatomic, strong)NSDictionary *teacher;
 
 @end

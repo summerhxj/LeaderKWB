@@ -14,6 +14,8 @@
 {
     if ([key isEqualToString:@"id"]) {
         self.userid = [value integerValue];
+    } else if ([key isEqualToString:@"class"]) {
+        self.myClass = value;
     }
 }
 

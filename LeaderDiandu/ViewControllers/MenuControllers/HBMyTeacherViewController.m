@@ -10,6 +10,7 @@
 #import "UIViewController+AddBackBtn.h"
 #import "HBTitleView.h"
 #import "HBServiceManager.h"
+#import "HBDataSaveManager.h"
 
 #define KTagBindView        10001
 
@@ -18,6 +19,8 @@ static NSString * const KMyTeacherViewControllerCellReuseId = @"KUserInfoViewCon
 @interface HBMyTeacherViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSArray     *_titleArr;
+    
+    UIView      *_bindView;
     UITableView *_tableView;
     UITextField *_textField;
 }
@@ -40,51 +43,65 @@ static NSString * const KMyTeacherViewControllerCellReuseId = @"KUserInfoViewCon
     CGRect rect = self.view.frame;
     CGRect viewFrame = CGRectMake(0, KHBNaviBarHeight, rect.size.width, rect.size.height-KHBNaviBarHeight);
     [self createBindView:viewFrame];
-    _tableView = [[UITableView alloc] initWithFrame:viewFrame];
+    [self createTableView:viewFrame];
+    
+    HBUserEntity *userEntity = [[HBDataSaveManager defaultManager] userEntity];
+    if (userEntity.teacher) {
+        _tableView.hidden = NO;
+    } else {
+        _bindView.hidden = NO;
+    }
+    
+
+    [self getMyTeacher];
+}
+
+- (void)createTableView:(CGRect)frame
+{
+    _tableView = [[UITableView alloc] initWithFrame:frame];
     _tableView.hidden = YES;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
-
-    [self getMyTeacher];
 }
 
 - (void)createBindView:(CGRect)frame
 {
-    UIView *bindView = [[UIView alloc] initWithFrame:frame];
-    bindView.tag = KTagBindView;
-    [self.view addSubview:bindView];
+    _bindView = [[UIView alloc] initWithFrame:frame];
+    _bindView.hidden = YES;
+    _bindView.tag = KTagBindView;
+    [self.view addSubview:_bindView];
     
     float controlX = 20;
     float controlY = 20;
-    float width = frame.size.width - 20*2;
-    UIImageView *editBg = [[UIImageView alloc] initWithFrame:CGRectMake(controlX, controlY, width, 30)];
+    float width = frame.size.width - controlX*2;
+    UIImageView *editBg = [[UIImageView alloc] initWithFrame:CGRectMake(controlX, controlY, width, 50)];
     editBg.userInteractionEnabled = YES;
     UIImage *image = [UIImage imageNamed:@"user_editbg"];
     editBg.image = image;//[image resizableImageWithCapInsets:UIEdgeInsetsMake(2, 20, 2, 20) resizingMode:UIImageResizingModeStretch];
-    [bindView addSubview:editBg];
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, width-20, 20)];
+    [_bindView addSubview:editBg];
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 5, width-40, 40)];
     _textField.placeholder = @"请输入老师ID";
     [editBg addSubview:_textField];
     
-    controlY += 30+10;
+    controlY = CGRectGetMaxY(editBg.frame)+20;
     UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(controlX, controlY, width, 50)];
     tipLabel.backgroundColor = [UIColor clearColor];
-    tipLabel.textColor = [UIColor lightTextColor];
+    tipLabel.textColor = [UIColor lightGrayColor];
     tipLabel.text = @"如果您不知道老师的ID，请从您的老师处寻求帮助哦";
     tipLabel.numberOfLines = 2;
-    [bindView addSubview:tipLabel];
+    [_bindView addSubview:tipLabel];
     
-    float buttonHeight = 40;
+    float buttonHeight = 50;
     controlY = frame.size.height - buttonHeight - 30;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(controlX, controlY, width, buttonHeight)];
-    image = [[UIImage imageNamed:@"user_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 100, 0, 100) resizingMode:UIImageResizingModeStretch];
+    image = [UIImage imageNamed:@"user_button"];// resizableImageWithCapInsets:UIEdgeInsetsMake(0, 100, 0, 100) resizingMode:UIImageResizingModeStretch];
     [button setBackgroundImage:image forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitle:@"绑定老师" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(bindButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [bindView addSubview:button];
+    [_bindView addSubview:button];
 }
 
 - (void)bindButtonAction:(id)sender
@@ -94,7 +111,7 @@ static NSString * const KMyTeacherViewControllerCellReuseId = @"KUserInfoViewCon
 
 - (void)getMyTeacher
 {
-    HBUserEntity *userEntity = [HBServiceManager defaultManager].userEntity;
+    HBUserEntity *userEntity = [[HBDataSaveManager defaultManager] userEntity];
     [[HBServiceManager defaultManager] requestTeacher:userEntity.name teacher:nil completion:^(id responseObject, NSError *error) {
         
     }];

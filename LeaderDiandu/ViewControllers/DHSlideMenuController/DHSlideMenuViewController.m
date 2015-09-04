@@ -58,8 +58,8 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 {
     [super viewDidLayoutSubviews];
     
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    self.tableView.frame = CGRectMake(0, 100, 200, screenSize.height-100);
+//    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+//    self.tableView.frame = CGRectMake(0, 100, 200, screenSize.height-100);
 }
 
 #pragma mark - Configuring the view’s layout behavior
@@ -80,7 +80,7 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
     // Dispose of any resources that can be recreated.
 }
 
-- (void)headViewTapGesture:(UITapGestureRecognizer *)tap
+- (void)headButtonAction:(id)sender
 {
     DHSlideMenuController *svc = [DHSlideMenuController sharedInstance];
     [svc hideSlideMenuViewController:YES];
@@ -107,42 +107,55 @@ static NSString * const kSlideMenuViewControllerCellReuseId = @"kSlideMenuViewCo
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 80;
+    return 200;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] init];
-    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 40, 40)];
+    float controlX = 20;
+    float controlY = 80;
+    float controlH = 50;
+    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(controlX, controlY, controlH, controlH)];
     headView.image = [UIImage imageNamed:@"menu_head"];
     [view addSubview:headView];
     
-    UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, 100, 20)];
+    controlX += controlH;
+    float controlW = 120;
+    UIButton *buttonInfo = [[UIButton alloc] initWithFrame:CGRectMake(controlX, controlY, controlW, controlH)];
+    buttonInfo.backgroundColor = [UIColor clearColor];
+    [buttonInfo addTarget:self action:@selector(headButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:buttonInfo];
+    
+    controlX = 0;
+    controlY = 0;
+    controlW = 100;
+    controlH = 20;
+    UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(controlX, controlY, controlW, controlH)];
     nameLbl.backgroundColor = [UIColor clearColor];
     nameLbl.textColor = [UIColor whiteColor];
     nameLbl.font = [UIFont systemFontOfSize:14];
     nameLbl.text = _headerName;
-    [view addSubview:nameLbl];
+    [buttonInfo addSubview:nameLbl];
     
-    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, 100, 20)];
+    controlY += controlH;
+    UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(controlX, controlY, controlW, controlH)];
     phoneLbl.backgroundColor = [UIColor clearColor];
     phoneLbl.textColor = [UIColor whiteColor];
     phoneLbl.font = [UIFont systemFontOfSize:14];
     phoneLbl.text = _headerPhone;
-    [view addSubview:phoneLbl];
+    [buttonInfo addSubview:phoneLbl];
     
-    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(170, 20, 20, 20)];
+    controlX += controlW;
+    controlY = 15;
+    UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(controlX, controlY, controlH, controlH)];
     arrowImg.image = [UIImage imageNamed:@"menu_right"];
-    [view addSubview:arrowImg];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewTapGesture:)];
-    //将触摸事件添加到当前view
-    [view addGestureRecognizer:tapGestureRecognizer];
+    [buttonInfo addSubview:arrowImg];
     
     return view;
 }

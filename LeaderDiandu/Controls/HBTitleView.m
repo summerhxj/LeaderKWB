@@ -18,7 +18,7 @@
         self.font = [UIFont boldSystemFontOfSize:18];
         self.textAlignment = NSTextAlignmentCenter;
         self.backgroundColor = [UIColor clearColor];
-        self.textColor = [UIColor orangeColor];
+        self.textColor = [UIColor blackColor];
         self.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
         self.shadowOffset = CGSizeMake(0, 1);
     }

@@ -10,6 +10,9 @@
 #import "UIViewController+AddBackBtn.h"
 #import "HBTitleView.h"
 #import "HBServiceManager.h"
+#import "HBEditNameViewController.h"
+#import "HBBindPhoneViewController.h"
+#import "HBDataSaveManager.h"
 
 static NSString * const KUserInfoViewControllerCellReuseId = @"KUserInfoViewControllerCellReuseId";
 
@@ -38,6 +41,7 @@ static NSString * const KUserInfoViewControllerCellReuseId = @"KUserInfoViewCont
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, KHBNaviBarHeight, rect.size.width, rect.size.height-KHBNaviBarHeight)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.scrollEnabled = NO;
     _tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:_tableView];
     
@@ -46,9 +50,11 @@ static NSString * const KUserInfoViewControllerCellReuseId = @"KUserInfoViewCont
 
 - (void)getUserInfo
 {
-    HBUserEntity *userEntity = [HBServiceManager defaultManager].userEntity;
-    [[HBServiceManager defaultManager] requestUserInfo:userEntity.userid token:userEntity.token completion:^(id responseObject, NSError *error) {
-        
+    HBUserEntity *userEntity = [[HBDataSaveManager defaultManager] userEntity];
+    [[HBServiceManager defaultManager] requestUserInfo:userEntity.name token:userEntity.token completion:^(id responseObject, NSError *error) {
+        if (responseObject) {
+            [[HBDataSaveManager defaultManager] setUserEntityByDict:responseObject];
+        }
     }];
 }
 
@@ -94,16 +100,54 @@ static NSString * const KUserInfoViewControllerCellReuseId = @"KUserInfoViewCont
     NSParameterAssert(_titleArr);
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:KUserInfoViewControllerCellReuseId];
+    NSInteger index = indexPath.row;
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:KUserInfoViewControllerCellReuseId];
+        float viewWidth = self.view.frame.size.width;
+        float width = 200;
+        UILabel *valueLbl = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth-width-40, 10, width, 20)];
+        valueLbl.tag = 1001;
+        valueLbl.backgroundColor = [UIColor clearColor];
+        valueLbl.textColor = [UIColor lightGrayColor];
+        valueLbl.textAlignment = NSTextAlignmentRight;
+        [cell.contentView addSubview:valueLbl];
+        
+        if (index == 0) {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        } else if (index > 0) {
+            UIImageView *arrowImg = [[UIImageView alloc] initWithFrame:CGRectMake(viewWidth-40, 20, 20, 20)];
+            arrowImg.image = [UIImage imageNamed:@"menu_right"];
+            [cell.contentView addSubview:arrowImg];
+        }
     }
     
     cell.backgroundColor = [UIColor clearColor];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = [_titleArr objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_titleArr objectAtIndex:index];
     cell.textLabel.textColor = [UIColor blackColor];
     
+    UILabel *valueLbl = (UILabel *)[cell.contentView viewWithTag:1001];
+    HBUserEntity *userEntity = [[HBDataSaveManager defaultManager] userEntity];
+    if (index == 0) {
+        valueLbl.text = userEntity.name;
+    } else if (index == 1) {
+        valueLbl.text = userEntity.display_name;
+    } else {
+        valueLbl.text = userEntity.phone;
+    }
+    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger index = indexPath.row;
+    if (index == 1) {
+        HBEditNameViewController *controller = [[HBEditNameViewController alloc] init];
+        [[AppDelegate delegate].globalNavi pushViewController:controller animated:YES];
+    } else if (index == 2) {
+        HBBindPhoneViewController *controller = [[HBBindPhoneViewController alloc] init];
+        [[AppDelegate delegate].globalNavi pushViewController:controller animated:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -72,7 +72,6 @@
         if (receivedBlock) {
             if ([responseObject isKindOfClass:[NSDictionary class]]) {
                 [[HBDataSaveManager defaultManager] saveUserByDict:responseObject];
-                self.userEntity = [[HBUserEntity alloc] initWithDictionary:responseObject];
             }
             receivedBlock(responseObject,error);
             self.receivedBlock = nil;
@@ -112,32 +111,32 @@
     [self Post:@"/api/auth/smscode" dict:dicInfo block:receivedBlock];
 }
 
-- (void)requestUserInfo:(NSInteger)userid token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock
+- (void)requestUserInfo:(NSString *)user token:(NSString *)token completion:(HBServiceReceivedBlock)receivedBlock
 {
     NSMutableDictionary *dicInfo = [[NSMutableDictionary alloc] init];
-    [dicInfo setObject:@(userid)     forKey:@"user"];
+    [dicInfo setObject:user     forKey:@"user"];
     [dicInfo setObject:token    forKey:@"token"];
     
     if (_receivedBlock) {
         return;
     }
     self.receivedBlock = receivedBlock;
-    [self Post:@"/api/auth/user" dict:dicInfo block:receivedBlock];
+    [self Post:@"/api/user" dict:dicInfo block:receivedBlock];
 }
 
-- (void)requestUpdateUser:(NSString *)user token:(NSString *)token display_name:(NSString *)display_name gender:(NSString *)gender completion:(HBServiceReceivedBlock)receivedBlock
+- (void)requestUpdateUser:(NSString *)user token:(NSString *)token display_name:(NSString *)display_name gender:(NSInteger)gender completion:(HBServiceReceivedBlock)receivedBlock
 {
     NSMutableDictionary *dicInfo = [[NSMutableDictionary alloc] init];
     [dicInfo setObject:user     forKey:@"user"];
     [dicInfo setObject:token    forKey:@"token"];
     [dicInfo setObject:display_name    forKey:@"display_name"];
-    [dicInfo setObject:gender    forKey:@"gender"];
+    [dicInfo setObject:@(gender)    forKey:@"gender"];
     
     if (_receivedBlock) {
         return;
     }
     self.receivedBlock = receivedBlock;
-    [self Post:@"/api/auth/update" dict:dicInfo block:receivedBlock];
+    [self Post:@"/api/user/update" dict:dicInfo block:receivedBlock];
 }
 
 - (void)requestUpdatePhone:(NSString *)user token:(NSString *)token phone:(NSString *)phone sms_code:(NSString *)sms_code completion:(HBServiceReceivedBlock)receivedBlock

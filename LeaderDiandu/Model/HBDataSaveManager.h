@@ -7,12 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HBUserEntity.h"
 
 #define KWBDefaultUser      @"KWBDefaultUser"
 
 @interface HBDataSaveManager : NSObject
 
+@property (nonatomic, strong)HBUserEntity *userEntity;
+
 + (id)defaultManager;
+
+- (void)setUserEntityByDict:(NSDictionary *)dict;
+- (void)updateDisplayName:(NSDictionary *)dict;
 
 - (void)saveUserByDict:(NSDictionary *)dict;
 - (NSDictionary *)loadUser;
