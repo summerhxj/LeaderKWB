@@ -10,7 +10,7 @@
 #import "HBNTextField.h"
 #import "NSString+Verify.h"
 #import "HBServiceManager.h"
-#import "HBTitleView.h"
+#import "HBTitleView.h" 
 
 @interface HBRegistViewController ()
 

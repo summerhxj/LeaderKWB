@@ -7,13 +7,9 @@
 //
 
 #import "Navigator.h"
-
-#import "UIDevice+Addtional.h"
 #import "AppDelegate.h"
 
 #import "HBLoginViewController.h"
-#import "MLNavigationController.h"
-
 #import "HBGradeViewController.h"
 
 @implementation Navigator
@@ -85,7 +81,7 @@
 + (void)showRootController
 {
     HBGradeViewController* vc = [[HBGradeViewController alloc] init];
-    UINavigationController* nav = [[MLNavigationController alloc] initWithRootViewController:vc];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBarHidden = YES;
     [AppDelegate delegate].window.rootViewController = nav;
 }

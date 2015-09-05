@@ -21,8 +21,6 @@
 #import "Navigator.h"
 #import "AppDelegate.h"
 #import "UIImage+Extra.h"
-#import "NSString+Extra.h"
-#import "NSDictionary+Safe.h"
 #import "UIDevice+Addtional.h"
 #import "MBHudUtil.h"
 #endif
